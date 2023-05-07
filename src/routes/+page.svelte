@@ -62,7 +62,6 @@
     if(!isWordCompleted) {
       letterEl = wordsEl.children[wordIndex].children[letterIndex] as HTMLSpanElement
     }
-
   }
 
   function checkLetter() {
@@ -87,6 +86,14 @@
     const isOneLetterWord = words[wordIndex].length === 1
 
     if(isNotFirstLetter || isOneLetterWord) {
+      let wordEl = wordsEl.children[wordIndex] as HTMLSpanElement
+      if(letterIndex < (words[wordIndex].length )) {
+        wordEl.dataset.state = "skipped"
+      }
+      else {
+        wordEl.dataset.state = "complete"
+      }
+      console.debug(wordEl)
       wordIndex += 1
       letterIndex = 0
       increaseScore()
@@ -315,6 +322,10 @@
     opacity: 0.8!important;
   }
 
+  :global(.word[data-state='skipped']) { 
+    border-bottom: 2px solid red;
+  }
+
   .words {
 
     .caret {
@@ -322,6 +333,7 @@
       height: 1.8rem;
       top: 0;
       border-right: 3px solid var(--primary);
+
       // animation: caret 1s infinite;
       transition: all 0.2s ease;
 
@@ -371,9 +383,6 @@
       font-size: 32px;
     }
   }
-
-
-
 
 </style>
 
